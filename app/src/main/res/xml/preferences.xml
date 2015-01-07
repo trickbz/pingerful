@@ -33,12 +33,20 @@
     <PreferenceCategory
         android:title="@string/pref_notifications_group_title"
         android:key="pref_notifications_group_key"
-        android:summary="Notifications are set per host in host settings, no notification by default."
+        android:summary="Notifications in status bar, are set per host in host settings, no notification by default."
     >
         <RingtonePreference
 
-            android:key="@string/pref_button_set_notification_ringtone"
-            android:title="@string/pref_use_notification_sound_title"
+            android:key="@string/pref_button_set_ping_fails_notification_ringtone"
+            android:title="@string/pref_button_set_ping_fails_notification_ringtone_title"
+            android:ringtoneType="notification"
+
+        />
+
+        <RingtonePreference
+
+            android:key="@string/pref_button_set_host_online_notification_ringtone"
+            android:title="@string/pref_button_set_host_online_notification_ringtone_title"
             android:ringtoneType="notification"
 
         />
