@@ -85,7 +85,7 @@ public class MainActivity extends ActionBarActivity {
                     boolean pingAutomatically = prefs.getBoolean(getString(R.string.pref_ping_automatically), true);
                     int pingIntervalMinutes = Integer.parseInt(prefs.getString(getString(R.string.pref_ping_interval), "2"));
                     if (pingAutomatically)
-                        _pingHandler.postDelayed(_pingHostHandlerRunnable, TimeUnit.MINUTES.toMillis(pingIntervalMinutes));
+                        _pingHandler.postDelayed(_pingHostHandlerRunnable, 0);
                     else
                         _pingHandler.removeCallbacks(_pingHostHandlerRunnable);
                 }
