@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name"> Pingerful</string>
+    <string name="hello_world">The best pinger in the world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="action_add_host">Add</string>
+    <string name="btn_test_notification">Notification</string>
+    <string name="refresh_hosts_action_bar">Stop</string>
+    <string name="pref_use_notification_title">Use notifications</string>
+    <string name="pref_use_notification_summary">Show notification in status bar when ping is failed</string>
+    <string name="pref_use_notification_sound_title">Notification sound</string>
+    <string name="pref_notifications_group_title">Notifications</string>
+    <string name="pref_ping_mode_group_title">Ping mode</string>
+    <string name="pref_ping_interval_title">Ping interval (minutes)</string>
+    <string name="pref_use_notifications">pref_use_notifications</string>
+    <string name="pref_button_set_notification_ringtone">pref_button_set_notification_ringtone</string>
+    <string name="pref_ping_interval">pref_ping_interval</string>
+    <string name="preferences_file_key">preferences_file_key</string>
+    <string name="pref_ping_automatically">pref_ping_automatically</string>
+    <string name="pref_ping_automatically_title">Ping automatically</string>
+    <string name="pref_ping_automatically_summary">Ping hosts automatically or manually</string>
+    <string name="cancel_add_host_button">Cancel</string>
+    <string name="host_name_or_ip_title">Host Name or IP</string>
+    <string name="check_host_button_title_add_host_dialog">Check Host</string>
+    <string name="ping_all_button_text_main_activity">Force Ping</string>
+    <string name="host_name_or_ip_required_error_message">Host name or IP is required</string>
+    <string name="add_host_dialog_fragment_tag">addHostDialog</string>
+    <string name="checkbox_skip_host_title">Is active</string>
+    <string name="delete_host_dialog_tag">delete_host_dialog_tag</string>
+    <string name="checkbox_notify_ping_fails">Notify ping fails</string>
+    <string name="pref_notification_host_back_online">pref_notification_host_back_online</string>
+    <string name="pref_notification_host_back_online_title">Notify when host back online</string>
+
+</resources>

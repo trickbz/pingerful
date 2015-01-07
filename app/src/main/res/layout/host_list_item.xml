@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<GridLayout
+
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:rowCount="3"
+    android:columnCount="3"
+    android:descendantFocusability="blocksDescendants"
+    android:layout_margin="10dp"
+    android:padding="5dp"
+
+>
+
+    <TextView
+
+        android:id="@+id/host_title_list_host_item"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textStyle="bold"
+        android:text="Google site very long name (google.com)"
+        android:layout_row="0"
+        android:layout_column="0"
+        android:layout_columnSpan="3"
+        style="@android:style/TextAppearance.Medium"
+        android:textColor="#f5965d"
+
+    />
+
+    <LinearLayout
+
+        android:orientation="vertical"
+        android:layout_row="1"
+        android:layout_rowSpan="2"
+        android:layout_column="0"
+        android:layout_columnSpan="2"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="10dp"
+    >
+        <TextView
+
+            android:text="Check: 01-04 13:00"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:id="@+id/last_checked_list_host_item"
+
+        />
+
+
+        <TextView
+
+            android:text="Online: 01-03 11:23"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:id="@+id/last_online_list_host_item"
+        />
+    </LinearLayout>
+
+    <LinearLayout
+
+        android:orientation="horizontal"
+        android:layout_column="2"
+        android:layout_row="1"
+        android:layout_rowSpan="2"
+        android:layout_gravity="right|center_vertical"
+
+    >
+
+        <ToggleButton
+
+            android:id="@+id/skip_check_list_host_item"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="onCheckboxClicked"
+            android:focusableInTouchMode="true"
+            android:focusable="true"
+
+        />
+
+        <!--<CheckBox-->
+
+            <!--android:id="@+id/skip_check_list_host_item"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:focusableInTouchMode="true"-->
+            <!--android:focusable="true"-->
+            <!--android:onClick="onCheckboxClicked"-->
+
+
+        <!--/>-->
+
+        <ImageView
+
+            android:src="@drawable/ok_green_32px"
+            android:id="@+id/status_icon_list_host_item"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_gravity="center_vertical"
+
+        />
+
+    </LinearLayout>
+
+
+
+</GridLayout>

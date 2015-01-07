@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:key="@string/preferences_file_key"
+>
+
+    <PreferenceCategory
+        android:title="@string/pref_ping_mode_group_title"
+        android:key="pref_ping_mode_group_key"
+    >
+        <CheckBoxPreference
+
+            android:key="@string/pref_ping_automatically"
+            android:title="@string/pref_ping_automatically_title"
+            android:summary="@string/pref_ping_automatically_summary"
+            android:defaultValue="true"
+
+        />
+
+        <com.trickbz.pingerful.EditTextPreference
+
+            android:dependency="pref_ping_automatically"
+            android:key="@string/pref_ping_interval"
+            android:inputType="numberSigned"
+            android:title="@string/pref_ping_interval_title"
+            android:summary="Ping hosts each %s minute(s)"
+            android:defaultValue="2"
+
+        />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:title="@string/pref_notifications_group_title"
+        android:key="pref_notifications_group_key"
+        android:summary="Notifications are set per host in host settings, no notification by default."
+    >
+        <RingtonePreference
+
+            android:key="@string/pref_button_set_notification_ringtone"
+            android:title="@string/pref_use_notification_sound_title"
+            android:ringtoneType="notification"
+
+        />
+
+        <CheckBoxPreference
+
+            android:key="@string/pref_notification_host_back_online"
+            android:title="@string/pref_notification_host_back_online_title"
+            android:defaultValue="true"
+
+        />
+
+    </PreferenceCategory>
+
+
+</PreferenceScreen>
