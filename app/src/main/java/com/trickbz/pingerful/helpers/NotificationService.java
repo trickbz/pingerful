@@ -19,32 +19,44 @@ public final class NotificationService {
 
     public static void notifyPingFails(Context context, Host host)
     {
-        final SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);
-        String ringtoneString =  pref.getString(context.getString(R.string.pref_button_set_notification_ringtone), "DEFAULT_SOUND");
-        Uri ringtoneUri =  Uri.parse(ringtoneString);
-
         String hostTitle = host.title.isEmpty() ?
                 host.nameOrIp :
                 String.format("%s (%s)", host.title, host.nameOrIp);
+        notify(context, host, "Ping failed", hostTitle, R.string.pref_button_set_ping_fails_notification_ringtone);
+    }
+
+    public static void notifyHostOnline(Context context, Host host)
+    {
+        String hostTitle = host.title.isEmpty() ?
+                host.nameOrIp :
+                String.format("%s (%s)", host.title, host.nameOrIp);
+        notify(context, host, "Host online", hostTitle, R.string.pref_button_set_host_online_notification_ringtone);
+    }
+
+    private static void notify(Context context, Host host, String title, String message, int ringtoneResourceId)
+    {
+        final SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);
+        Uri defaultNotificationUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+        String ringtoneString = pref.getString(context.getString(ringtoneResourceId), null);
+        Uri ringtoneUri = ringtoneString == null ? defaultNotificationUri : Uri.parse(ringtoneString);
 
         Intent notificationIntent = new Intent(context, MainActivity.class);
         notificationIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-        PendingIntent intent = PendingIntent.getActivity(context, 0,
-                notificationIntent, 0);
+        PendingIntent intent = PendingIntent.getActivity(context, 0, notificationIntent, 0);
 
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context);
         Notification notification = builder
                 .setSmallIcon(R.drawable.ping)
-                .setContentTitle("Ping failed")
-                .setContentText(hostTitle)
+                .setContentTitle(title)
+                .setContentText(message)
                 .setAutoCancel(true)
                 .setVibrate(new long[]{0, 100, 1000})
                 .setSound(ringtoneUri)
                 .setContentIntent(intent)
                 .build();
 
-        NotificationManager notificationManager = (NotificationManager)context.getSystemService(Context.NOTIFICATION_SERVICE);
-        notificationManager.notify(1 , notification);
+        NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+        notificationManager.notify(1, notification);
     }
 
 }

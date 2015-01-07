@@ -45,14 +45,14 @@ public class PingHostListTask extends AsyncTask<Void, Void, Void> {
 
                 if (host.notifyWhenPingFails)
                 {
-                    if (isOnlinePrevious && !pingPassed)
+                    if (isOnlinePrevious && !pingPassed) // ping failed
                         NotificationService.notifyPingFails(this._context, host);
-                    boolean prefNotifyWhenHostBackOnline = prefs.getBoolean(_context.getString(R.string.pref_notification_host_back_online), true);
-                    if (prefNotifyWhenHostBackOnline && !isOnlinePrevious)
-                    {
-                        NotificationService.notifyPingFails(this._context, host);
-                    }
 
+                    boolean prefNotifyWhenHostBackOnline = prefs.getBoolean(_context.getString(R.string.pref_notification_host_back_online), true);
+                    if (prefNotifyWhenHostBackOnline && pingPassed && !isOnlinePrevious) // host online
+                    {
+                        NotificationService.notifyHostOnline(this._context, host);
+                    }
                 }
                 host.save();
             }

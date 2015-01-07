@@ -158,7 +158,7 @@ public class AddHostDialog extends DialogFragment
         final AlertDialog alertDialog = (AlertDialog)getDialog();
         if(alertDialog != null)
         {
-            Button positiveButton = (Button) alertDialog.getButton(Dialog.BUTTON_POSITIVE);
+            Button positiveButton = alertDialog.getButton(Dialog.BUTTON_POSITIVE);
             positiveButton.setOnClickListener(new View.OnClickListener()
             {
                 @Override

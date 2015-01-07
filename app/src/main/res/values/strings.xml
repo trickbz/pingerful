@@ -9,12 +9,10 @@
     <string name="refresh_hosts_action_bar">Stop</string>
     <string name="pref_use_notification_title">Use notifications</string>
     <string name="pref_use_notification_summary">Show notification in status bar when ping is failed</string>
-    <string name="pref_use_notification_sound_title">Notification sound</string>
     <string name="pref_notifications_group_title">Notifications</string>
     <string name="pref_ping_mode_group_title">Ping mode</string>
     <string name="pref_ping_interval_title">Ping interval (minutes)</string>
     <string name="pref_use_notifications">pref_use_notifications</string>
-    <string name="pref_button_set_notification_ringtone">pref_button_set_notification_ringtone</string>
     <string name="pref_ping_interval">pref_ping_interval</string>
     <string name="preferences_file_key">preferences_file_key</string>
     <string name="pref_ping_automatically">pref_ping_automatically</string>
@@ -30,6 +28,10 @@
     <string name="delete_host_dialog_tag">delete_host_dialog_tag</string>
     <string name="checkbox_notify_ping_fails">Notify ping fails</string>
     <string name="pref_notification_host_back_online">pref_notification_host_back_online</string>
-    <string name="pref_notification_host_back_online_title">Notify when host back online</string>
+    <string name="pref_notification_host_back_online_title">Notify host online</string>
+    <string name="pref_button_set_ping_fails_notification_ringtone">pref_button_set_ping_fails_notification_ringtone</string>
+    <string name="pref_button_set_ping_fails_notification_ringtone_title">Host offline ringtone</string>
+    <string name="pref_button_set_host_online_notification_ringtone">pref_button_set_host_online_notification_ringtone</string>
+    <string name="pref_button_set_host_online_notification_ringtone_title">Host online ringtone</string>
 
 </resources>
