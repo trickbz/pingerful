@@ -30,6 +30,7 @@ public class PingHostListTask extends AsyncTask<Void, Void, Void> {
         ArrayList<Host> hosts = Host.all();
 
         final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(_context);
+        boolean isPingAutomatically = prefs.getBoolean(_context.getString(R.string.pref_ping_automatically), true);
 
         for (Host host : hosts)
         {
@@ -43,7 +44,7 @@ public class PingHostListTask extends AsyncTask<Void, Void, Void> {
                 host.lastCheckedDate = currentDate;
                 if (pingPassed) host.lastOnlineDate = currentDate;
 
-                if (host.notifyWhenPingFails)
+                if (isPingAutomatically && host.notifyWhenPingFails)
                 {
                     if (isOnlinePrevious && !pingPassed) // ping failed
                         NotificationService.notifyPingFails(this._context, host);

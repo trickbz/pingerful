@@ -2,15 +2,18 @@ package com.trickbz.pingerful;
 
 import android.app.Activity;
 import android.content.SharedPreferences;
+import android.media.RingtoneManager;
+import android.net.Uri;
 import android.os.Bundle;
-import android.os.PersistableBundle;
 
 
-public class SettingsActivity extends Activity {
-
-    private boolean mUseNotifications;
-    private int mPingInterval;
-    private boolean mPingAutomatically;
+public class SettingsActivity extends Activity
+{
+    private int _pingInterval;
+    private boolean _pingAutomatically;
+    private boolean _notifyHostOnline;
+    private String _hostOfflineNotificationRingtone;
+    private String _hostOnlineNotificationRingtone;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,10 +25,12 @@ public class SettingsActivity extends Activity {
 
         SharedPreferences preferences = getSharedPreferences(getString(R.string.preferences_file_key), 0);
 
-        mUseNotifications = preferences.getBoolean(getString(R.string.pref_use_notifications), true);
-        mPingInterval = preferences.getInt(getString(R.string.pref_ping_interval), 2);
-        mPingAutomatically = preferences.getBoolean(getString(R.string.pref_ping_automatically), true);
+        _pingInterval = preferences.getInt(getString(R.string.pref_ping_interval), 2);
+        _pingAutomatically = preferences.getBoolean(getString(R.string.pref_ping_automatically), true);
+        _notifyHostOnline = preferences.getBoolean(getString(R.string.pref_notification_host_back_online), true);
 
+        _hostOfflineNotificationRingtone = preferences.getString(getString(R.string.pref_button_set_ping_fails_notification_ringtone), "NO_SOUND");
+        _hostOnlineNotificationRingtone = preferences.getString(getString(R.string.pref_button_set_host_online_notification_ringtone), "NO_SOUND");
     }
 
     @Override
@@ -35,11 +40,12 @@ public class SettingsActivity extends Activity {
         SharedPreferences preferences = getSharedPreferences(getString(R.string.preferences_file_key), 0);
         SharedPreferences.Editor editor = preferences.edit();
 
-        editor.putBoolean(getString(R.string.pref_use_notifications), mUseNotifications);
-        editor.putInt(getString(R.string.pref_ping_interval), mPingInterval);
-        editor.putBoolean(getString(R.string.pref_ping_automatically), mPingAutomatically);
+        editor.putInt(getString(R.string.pref_ping_interval), _pingInterval);
+        editor.putBoolean(getString(R.string.pref_ping_automatically), _pingAutomatically);
+        editor.putBoolean(getString(R.string.pref_notification_host_back_online), _notifyHostOnline);
+        editor.putString(getString(R.string.pref_button_set_ping_fails_notification_ringtone), _hostOfflineNotificationRingtone);
+        editor.putString(getString(R.string.pref_button_set_host_online_notification_ringtone), _hostOnlineNotificationRingtone);
 
         editor.commit();
-
     }
 }

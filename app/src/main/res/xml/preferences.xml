@@ -34,6 +34,7 @@
         android:title="@string/pref_notifications_group_title"
         android:key="pref_notifications_group_key"
         android:summary="Notifications in status bar, are set per host in host settings, no notification by default."
+        android:dependency="pref_ping_automatically"
     >
         <RingtonePreference
 
