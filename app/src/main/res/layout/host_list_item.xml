@@ -13,20 +13,31 @@
 
 >
 
-    <TextView
-
-        android:id="@+id/host_title_list_host_item"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textStyle="bold"
-        android:text="Google site very long name (google.com)"
+    <LinearLayout
         android:layout_row="0"
         android:layout_column="0"
         android:layout_columnSpan="3"
-        style="@android:style/TextAppearance.Medium"
-        android:textColor="#f5965d"
+    >
+        <TextView
 
-    />
+            android:id="@+id/host_title_list_host_item"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:text="Google site very long name (google.com)"
+            style="@android:style/TextAppearance.Medium"
+            android:textColor="#f5965d"
+        />
+
+        <ImageView
+            android:src="@drawable/bulb_yellow_32px"
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:id="@+id/use_notification_icon_list_host_item"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="2dp"
+        />
+    </LinearLayout>
 
     <LinearLayout
 
@@ -38,23 +49,59 @@
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="10dp"
     >
-        <TextView
 
-            android:text="Check: 01-04 13:00"
-            android:layout_height="wrap_content"
+        <LinearLayout
             android:layout_width="wrap_content"
-            android:id="@+id/last_checked_list_host_item"
-
-        />
-
-
-        <TextView
-
-            android:text="Online: 01-03 11:23"
             android:layout_height="wrap_content"
+
+        >
+            <View
+                android:layout_width="5dp"
+                android:layout_height="5dp"
+                android:background="@drawable/circle_grey"
+                android:layout_gravity="center_vertical"
+            />
+            <Space
+                android:layout_width="3dp"
+                android:layout_height="wrap_content"
+            />
+            <TextView
+
+                android:text="01-04 13:00"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:id="@+id/last_checked_list_host_item"
+
+                />
+
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="wrap_content"
-            android:id="@+id/last_online_list_host_item"
-        />
+            android:layout_height="wrap_content"
+
+            >
+            <View
+                android:layout_width="5dp"
+                android:layout_height="5dp"
+                android:background="@drawable/circle_green"
+                android:layout_gravity="center_vertical"
+            />
+            <Space
+                android:layout_width="3dp"
+                android:layout_height="wrap_content"
+            />
+            <TextView
+
+                android:text="01-03 11:23"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:id="@+id/last_online_list_host_item"
+            />
+        </LinearLayout>
+
+
+
     </LinearLayout>
 
     <LinearLayout
@@ -66,29 +113,15 @@
         android:layout_gravity="right|center_vertical"
 
     >
-
         <ToggleButton
 
             android:id="@+id/skip_check_list_host_item"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:onClick="onCheckboxClicked"
             android:focusableInTouchMode="true"
             android:focusable="true"
 
         />
-
-        <!--<CheckBox-->
-
-            <!--android:id="@+id/skip_check_list_host_item"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:focusableInTouchMode="true"-->
-            <!--android:focusable="true"-->
-            <!--android:onClick="onCheckboxClicked"-->
-
-
-        <!--/>-->
 
         <ImageView
 

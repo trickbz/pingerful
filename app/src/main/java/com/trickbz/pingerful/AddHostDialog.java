@@ -48,7 +48,7 @@ public class AddHostDialog extends DialogFragment
         AddHostDialog fragment = new AddHostDialog();
         Bundle args = new Bundle();
         args.putBoolean(IS_HOST_ACTIVE_ARG_KEY, operationType == CreateUpdate.CREATE || host.isActive);
-        args.putBoolean(IS_NOTIFY_PING_FAILS, operationType != CreateUpdate.CREATE || host.notifyWhenPingFails);
+        args.putBoolean(IS_NOTIFY_PING_FAILS, operationType != CreateUpdate.CREATE && host.notifyWhenPingFails);
         args.putString(HOST_TITLE_ARG_KEY, host.title);
         args.putString(HOST_NAME_OR_IP_ARG_KEY, host.nameOrIp);
         args.putInt(CREATE_OR_UPDATE_ARG_KEY, operationType.value());

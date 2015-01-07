@@ -52,8 +52,8 @@ public class HostArrayAdapter extends ArrayAdapter<Host> {
         TextView tvLastChecked = (TextView) convertView.findViewById(R.id.last_checked_list_host_item);
         TextView tvLastOnline = (TextView) convertView.findViewById(R.id.last_online_list_host_item);
 
-        String lastCheckedMessage= String.format("<strong>Check:</strong> %s", GeneralHelper.toShortDateTimeFormat(new Date()));
-        String lastOnlineMessage = String.format("<strong>Online:</strong> %s", GeneralHelper.toShortDateTimeFormat(new Date()));
+        String lastCheckedMessage= GeneralHelper.toShortDateTimeFormat(new Date());
+        String lastOnlineMessage = GeneralHelper.toShortDateTimeFormat(new Date());
 
         tvLastChecked.setText(Html.fromHtml(lastCheckedMessage));
         tvLastOnline.setText(Html.fromHtml(lastOnlineMessage));
@@ -65,6 +65,12 @@ public class HostArrayAdapter extends ArrayAdapter<Host> {
                         R.drawable.ok_green_32px :
                         R.drawable.alert_red_32px;
         statusIcon.setImageResource(imageResourceId);
+
+        ImageView useNotificationsIcon = (ImageView) convertView.findViewById(R.id.use_notification_icon_list_host_item);
+        imageResourceId = host.notifyWhenPingFails ?
+                R.drawable.bulb_yellow_32px :
+                R.drawable.bulb_grey_32px;
+        useNotificationsIcon.setImageResource(imageResourceId);
 
         ToggleButton checkBoxSkip = (ToggleButton) convertView.findViewById(R.id.skip_check_list_host_item);
         checkBoxSkip.setOnClickListener(new View.OnClickListener() {
