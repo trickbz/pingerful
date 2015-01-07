@@ -41,9 +41,13 @@ public class MainActivity extends ActionBarActivity {
         public void run()
         {
             SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-            int pingIntervalMinutes = Integer.parseInt(prefs.getString(getString(R.string.pref_ping_interval), "2"));
-            runPingAllHostsTask();
-            _pingHandler.postDelayed(this, TimeUnit.MINUTES.toMillis(pingIntervalMinutes));
+            boolean isPingAutomatically = prefs.getBoolean(getString(R.string.pref_ping_automatically), true);
+            if (isPingAutomatically)
+            {
+                int pingIntervalMinutes = Integer.parseInt(prefs.getString(getString(R.string.pref_ping_interval), "2"));
+                runPingAllHostsTask();
+                _pingHandler.postDelayed(this, TimeUnit.MINUTES.toMillis(pingIntervalMinutes));
+            }
         }
     };
     private Menu _optionsMenu;
@@ -71,21 +75,27 @@ public class MainActivity extends ActionBarActivity {
         });
         findViewById(R.id.button_ping_all).performClick();
         registerForContextMenu(_listViewHosts);
-        Boolean isPingAutomatically = PreferenceManager.getDefaultSharedPreferences(this).getBoolean(getString(R.string.pref_ping_automatically), true);
+        final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        SharedPreferences.OnSharedPreferenceChangeListener prefsChangeListener = new SharedPreferences.OnSharedPreferenceChangeListener() {
+            @Override
+            public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key)
+            {
+                if (key.equals(getString(R.string.pref_ping_automatically)))
+                {
+                    boolean pingAutomatically = prefs.getBoolean(getString(R.string.pref_ping_automatically), true);
+                    int pingIntervalMinutes = Integer.parseInt(prefs.getString(getString(R.string.pref_ping_interval), "2"));
+                    if (pingAutomatically)
+                        _pingHandler.postDelayed(_pingHostHandlerRunnable, TimeUnit.MINUTES.toMillis(pingIntervalMinutes));
+                    else
+                        _pingHandler.removeCallbacks(_pingHostHandlerRunnable);
+                }
+            }
+        };
+        prefs.registerOnSharedPreferenceChangeListener(prefsChangeListener);
+
+        Boolean isPingAutomatically = prefs.getBoolean(getString(R.string.pref_ping_automatically), true);
         if (isPingAutomatically) _pingHandler.postDelayed(_pingHostHandlerRunnable, 0);
     }
-
-//    @Override
-//    protected void onPause() {
-//        super.onPause();
-//        _pingHandler.removeCallbacks(_pingHostHandlerRunnable);
-//    }
-
-//    @Override
-//    protected void onResume() {
-//        super.onResume();
-//        _pingHandler.postDelayed(_pingHostHandlerRunnable, 0);
-//    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
