@@ -17,7 +17,7 @@
 
         />
 
-        <com.trickbz.pingerful.EditTextPreference
+        <EditTextPreference
 
             android:dependency="pref_ping_automatically"
             android:key="@string/pref_ping_interval"

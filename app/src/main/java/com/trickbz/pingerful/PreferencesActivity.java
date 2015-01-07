@@ -2,12 +2,10 @@ package com.trickbz.pingerful;
 
 import android.app.Activity;
 import android.content.SharedPreferences;
-import android.media.RingtoneManager;
-import android.net.Uri;
 import android.os.Bundle;
 
 
-public class SettingsActivity extends Activity
+public class PreferencesActivity extends Activity
 {
     private int _pingInterval;
     private boolean _pingAutomatically;
@@ -20,7 +18,7 @@ public class SettingsActivity extends Activity
         super.onCreate(savedInstanceState);
 
         getFragmentManager().beginTransaction()
-                .replace(android.R.id.content, new SettingsFragment())
+                .replace(android.R.id.content, new PreferencesFragment())
                 .commit();
 
         SharedPreferences preferences = getSharedPreferences(getString(R.string.preferences_file_key), 0);

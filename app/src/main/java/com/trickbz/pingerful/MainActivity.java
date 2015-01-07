@@ -1,33 +1,23 @@
 package com.trickbz.pingerful;
 
-import android.app.AlarmManager;
-import android.app.AlertDialog;
 import android.app.FragmentManager;
-import android.app.Notification;
-import android.app.NotificationManager;
-import android.app.PendingIntent;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Handler;
 import android.preference.PreferenceManager;
-import android.support.v4.app.NotificationCompat;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.Toast;
 
-import com.trickbz.pingerful.helpers.PingHelper;
 import com.trickbz.pingerful.tasks.PingHostListTask;
 import com.trickbz.pingerful.tasks.VoidCallback;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.concurrent.TimeUnit;
 
 public class MainActivity extends ActionBarActivity {
@@ -83,7 +73,6 @@ public class MainActivity extends ActionBarActivity {
                 if (key.equals(getString(R.string.pref_ping_automatically)))
                 {
                     boolean pingAutomatically = prefs.getBoolean(getString(R.string.pref_ping_automatically), true);
-                    int pingIntervalMinutes = Integer.parseInt(prefs.getString(getString(R.string.pref_ping_interval), "2"));
                     if (pingAutomatically)
                         _pingHandler.postDelayed(_pingHostHandlerRunnable, 0);
                     else
@@ -189,7 +178,7 @@ public class MainActivity extends ActionBarActivity {
 
     public void onActionBarSettingsClick(MenuItem item)
     {
-        Intent i = new Intent(this, SettingsActivity.class);
+        Intent i = new Intent(this, PreferencesActivity.class);
         i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(i);
     }
