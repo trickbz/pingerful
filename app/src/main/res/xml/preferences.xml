@@ -44,19 +44,20 @@
 
         />
 
-        <RingtonePreference
-
-            android:key="@string/pref_button_set_host_online_notification_ringtone"
-            android:title="@string/pref_button_set_host_online_notification_ringtone_title"
-            android:ringtoneType="notification"
-
-        />
-
         <CheckBoxPreference
 
             android:key="@string/pref_notification_host_back_online"
             android:title="@string/pref_notification_host_back_online_title"
             android:defaultValue="true"
+
+        />
+
+        <RingtonePreference
+
+            android:dependency="@string/pref_notification_host_back_online"
+            android:key="@string/pref_button_set_host_online_notification_ringtone"
+            android:title="@string/pref_button_set_host_online_notification_ringtone_title"
+            android:ringtoneType="notification"
 
         />
 

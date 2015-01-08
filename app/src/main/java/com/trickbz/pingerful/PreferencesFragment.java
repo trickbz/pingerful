@@ -10,6 +10,7 @@ import android.preference.Preference;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceGroup;
 import android.preference.RingtonePreference;
+import android.provider.Settings;
 
 public class PreferencesFragment extends PreferenceFragment implements SharedPreferences.OnSharedPreferenceChangeListener {
 
@@ -55,8 +56,10 @@ public class PreferencesFragment extends PreferenceFragment implements SharedPre
         String preferenceKey = preference.getKey();
         if (preference instanceof RingtonePreference)
         {
-            String ringtonePath = sharedPrefs.getString(preferenceKey, "NO_SOUND");
-            Uri ringtoneUri = Uri.parse(ringtonePath);
+            String ringtonePath = sharedPrefs.getString(preferenceKey, null);
+            Uri ringtoneUri = ringtonePath != null ?
+                    Uri.parse(ringtonePath) :
+                    Settings.System.DEFAULT_RINGTONE_URI;
             Ringtone ringtone = RingtoneManager.getRingtone(getActivity(), ringtoneUri);
             preference.setSummary(ringtone.getTitle(getActivity()));
         }
