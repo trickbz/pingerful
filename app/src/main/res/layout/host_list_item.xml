@@ -29,14 +29,6 @@
             android:textColor="#f5965d"
         />
 
-        <ImageView
-            android:src="@drawable/bulb_yellow_32px"
-            android:layout_width="15dp"
-            android:layout_height="15dp"
-            android:id="@+id/use_notification_icon_list_host_item"
-            android:layout_gravity="center_vertical"
-            android:layout_marginLeft="2dp"
-        />
     </LinearLayout>
 
     <LinearLayout
@@ -113,6 +105,15 @@
         android:layout_gravity="right|center_vertical"
 
     >
+        <ImageView
+            android:src="@drawable/bulb_yellow_32px"
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:id="@+id/use_notification_icon_list_host_item"
+            android:layout_gravity="top"
+            android:layout_marginTop="5dp"
+        />
+
         <ToggleButton
 
             android:id="@+id/skip_check_list_host_item"

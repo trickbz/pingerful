@@ -27,8 +27,8 @@ public class PreferencesActivity extends Activity
         _pingAutomatically = preferences.getBoolean(getString(R.string.pref_ping_automatically), true);
         _notifyHostOnline = preferences.getBoolean(getString(R.string.pref_notification_host_back_online), true);
 
-        _hostOfflineNotificationRingtone = preferences.getString(getString(R.string.pref_button_set_ping_fails_notification_ringtone), "NO_SOUND");
-        _hostOnlineNotificationRingtone = preferences.getString(getString(R.string.pref_button_set_host_online_notification_ringtone), "NO_SOUND");
+        _hostOfflineNotificationRingtone = preferences.getString(getString(R.string.pref_button_set_ping_fails_notification_ringtone), null);
+        _hostOnlineNotificationRingtone = preferences.getString(getString(R.string.pref_button_set_host_online_notification_ringtone), null);
     }
 
     @Override
