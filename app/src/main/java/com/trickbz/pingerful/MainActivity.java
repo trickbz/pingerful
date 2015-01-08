@@ -1,6 +1,7 @@
 package com.trickbz.pingerful;
 
 import android.app.FragmentManager;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Handler;
@@ -13,7 +14,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 
+import com.trickbz.pingerful.helpers.PingHelper;
 import com.trickbz.pingerful.tasks.PingHostListTask;
 import com.trickbz.pingerful.tasks.VoidCallback;
 
@@ -25,22 +28,19 @@ public class MainActivity extends ActionBarActivity {
     private HostArrayAdapter _adapterListViewHosts;
     private ListView _listViewHosts;
     private ArrayList<Host> _hosts;
+    private Menu _optionsMenu;
     private Handler _pingHandler = new Handler();
     private Runnable _pingHostHandlerRunnable = new Runnable() {
         @Override
         public void run()
         {
             SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-            boolean isPingAutomatically = prefs.getBoolean(getString(R.string.pref_ping_automatically), true);
-            if (isPingAutomatically)
-            {
-                int pingIntervalMinutes = Integer.parseInt(prefs.getString(getString(R.string.pref_ping_interval), "2"));
-                runPingAllHostsTask();
-                _pingHandler.postDelayed(this, TimeUnit.MINUTES.toMillis(pingIntervalMinutes));
-            }
+            int pingIntervalMinutes = Integer.parseInt(prefs.getString(getString(R.string.pref_ping_interval), "2"));
+            runPingAllHostsTask();
+            _pingHandler.postDelayed(this, TimeUnit.MINUTES.toMillis(pingIntervalMinutes));
         }
     };
-    private Menu _optionsMenu;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -190,20 +190,27 @@ public class MainActivity extends ActionBarActivity {
 
     private void runPingAllHostsTask()
     {
-        setRefreshActionButtonState(true);
-        PingHostListTask taskPingHostList = new PingHostListTask(this);
-        final View pingAllButton = findViewById(R.id.button_ping_all);
-        pingAllButton.setEnabled(false);
+        if (PingHelper.isNetworkConnectionAvailable(this))
+        {
+            setRefreshActionButtonState(true);
+            PingHostListTask taskPingHostList = new PingHostListTask(this);
+            final View pingAllButton = findViewById(R.id.button_ping_all);
+            pingAllButton.setEnabled(false);
 
-        taskPingHostList.setCallback(new VoidCallback() {
-            @Override
-            public void onActionFinished() {
-                UpdateHostsList();
-                setRefreshActionButtonState(false);
-                pingAllButton.setEnabled(true);
-            }
-        });
-        taskPingHostList.execute();
+            taskPingHostList.setCallback(new VoidCallback() {
+                @Override
+                public void onActionFinished() {
+                    UpdateHostsList();
+                    setRefreshActionButtonState(false);
+                    pingAllButton.setEnabled(true);
+                }
+            });
+            taskPingHostList.execute();
+        }
+        else
+        {
+            Toast.makeText(this, getString(R.string.no_internet_connection_message), Toast.LENGTH_SHORT).show();
+        }
     }
 
     public void setRefreshActionButtonState(final boolean refreshing)

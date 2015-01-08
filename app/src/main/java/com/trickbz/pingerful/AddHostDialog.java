@@ -1,8 +1,10 @@
 package com.trickbz.pingerful;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -118,32 +120,38 @@ public class AddHostDialog extends DialogFragment
             @Override
             public void onClick(View v)
             {
-                final ProgressBar progressSpinner = (ProgressBar) view.findViewById(R.id.progress_spinner_check_host_add_host_dialog);
-                final ImageView hostStatusImage = (ImageView) view.findViewById(R.id.host_status_image_add_host);
-
-                final EditText editHostNameOrIp = (EditText) view.findViewById(R.id.edit_host_ip_add_host);
-                final String hostNameOrIp = String.valueOf(editHostNameOrIp.getText());
-
-                if (validateAddHostDialog(getDialog(), hostNameOrIp))
+                Context context = getActivity();
+                if (PingHelper.isNetworkConnectionAvailable(context))
                 {
-                    view.setEnabled(false);
-                    hostStatusImage.setVisibility(View.GONE);
-                    progressSpinner.setVisibility(View.VISIBLE);
+                    final ProgressBar progressSpinner = (ProgressBar) view.findViewById(R.id.progress_spinner_check_host_add_host_dialog);
+                    final ImageView hostStatusImage = (ImageView) view.findViewById(R.id.host_status_image_add_host);
+                    final EditText editHostNameOrIp = (EditText) view.findViewById(R.id.edit_host_ip_add_host);
+                    final String hostNameOrIp = String.valueOf(editHostNameOrIp.getText());
 
-                    PingHostTask taskPingHost = new PingHostTask();
-                    taskPingHost.setCallback(new TaskCompletedBooleanCallback() {
-                        @Override
-                        public void taskCompletedBooleanCallback(boolean result) {
-                            int imageResourceId = result ?
-                                    R.drawable.ok_green_32px :
-                                    R.drawable.alert_red_32px;
-                            hostStatusImage.setImageResource(imageResourceId);
-                            hostStatusImage.setVisibility(View.VISIBLE);
-                            progressSpinner.setVisibility(View.GONE);
-                            view.setEnabled(true);
-                        }
-                    });
-                    taskPingHost.execute(hostNameOrIp);
+                    if (validateAddHostDialog(getDialog(), hostNameOrIp)) {
+                        view.setEnabled(false);
+                        hostStatusImage.setVisibility(View.GONE);
+                        progressSpinner.setVisibility(View.VISIBLE);
+
+                        PingHostTask taskPingHost = new PingHostTask();
+                        taskPingHost.setCallback(new TaskCompletedBooleanCallback() {
+                            @Override
+                            public void taskCompletedBooleanCallback(boolean result) {
+                                int imageResourceId = result ?
+                                        R.drawable.ok_green_32px :
+                                        R.drawable.alert_red_32px;
+                                hostStatusImage.setImageResource(imageResourceId);
+                                hostStatusImage.setVisibility(View.VISIBLE);
+                                progressSpinner.setVisibility(View.GONE);
+                                view.setEnabled(true);
+                            }
+                        });
+                        taskPingHost.execute(hostNameOrIp);
+                    }
+                }
+                else
+                {
+                    Toast.makeText(context, context.getString(R.string.no_internet_connection_message), Toast.LENGTH_SHORT).show();
                 }
             }
         });
