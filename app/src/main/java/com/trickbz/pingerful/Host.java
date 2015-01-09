@@ -1,5 +1,7 @@
 package com.trickbz.pingerful;
 
+import android.support.annotation.Nullable;
+
 import com.activeandroid.Model;
 import com.activeandroid.annotation.Column;
 import com.activeandroid.annotation.Table;
@@ -35,6 +37,10 @@ public class Host extends Model {
 
     @Column(name = "NotifyPingFails")
     public boolean notifyWhenPingFails;
+
+    @Nullable
+    @Column(name = "Port")
+    public String portNumber;
 
     public Host() {
         super();

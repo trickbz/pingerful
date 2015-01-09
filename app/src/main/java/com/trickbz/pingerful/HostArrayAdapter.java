@@ -52,11 +52,11 @@ public class HostArrayAdapter extends ArrayAdapter<Host> {
         TextView tvLastChecked = (TextView) convertView.findViewById(R.id.last_checked_list_host_item);
         TextView tvLastOnline = (TextView) convertView.findViewById(R.id.last_online_list_host_item);
 
-        String lastCheckedMessage= GeneralHelper.toShortDateTimeFormat(host.lastCheckedDate);
-        String lastOnlineMessage = GeneralHelper.toShortDateTimeFormat(host.lastOnlineDate);
+        String lastCheckedMessage= GeneralHelper.toShortDateTimeFormat(host.lastCheckedDate == null ? new Date() : host.lastCheckedDate);
+        String lastOnlineMessage = GeneralHelper.toShortDateTimeFormat(host.lastOnlineDate == null ? new Date() : host.lastOnlineDate);
 
-        tvLastChecked.setText(Html.fromHtml(lastCheckedMessage));
-        tvLastOnline.setText(Html.fromHtml(lastOnlineMessage));
+        tvLastChecked.setText(lastCheckedMessage);
+        tvLastOnline.setText(lastOnlineMessage);
 
         ImageView statusIcon = (ImageView) convertView.findViewById(R.id.status_icon_list_host_item);
         int imageResourceId = !host.isActive ?

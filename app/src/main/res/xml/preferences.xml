@@ -21,7 +21,7 @@
 
             android:dependency="pref_ping_automatically"
             android:key="@string/pref_ping_interval"
-            android:inputType="numberSigned"
+            android:inputType="number"
             android:title="@string/pref_ping_interval_title"
             android:summary="Ping hosts each %s minute(s)"
             android:defaultValue="2"

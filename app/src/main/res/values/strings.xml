@@ -19,11 +19,11 @@
     <string name="pref_ping_automatically_summary">Ping hosts automatically or manually. In manual mode notifications aren\'t thrown.</string>
     <string name="cancel_add_host_button">Cancel</string>
     <string name="host_name_or_ip_title">Host Name or IP</string>
-    <string name="check_host_button_title_add_host_dialog">Check Host</string>
+    <string name="check_host_button_title_add_host_dialog">Check</string>
     <string name="ping_all_button_text_main_activity">Force Ping</string>
     <string name="host_name_or_ip_required_error_message">Host name or IP is required</string>
     <string name="add_host_dialog_fragment_tag">addHostDialog</string>
-    <string name="checkbox_skip_host_title">Is active</string>
+    <string name="checkbox_skip_host_title">Active</string>
     <string name="delete_host_dialog_tag">delete_host_dialog_tag</string>
     <string name="checkbox_notify_ping_fails">Notify ping fails</string>
     <string name="pref_notification_host_back_online">pref_notification_host_back_online</string>
@@ -33,5 +33,6 @@
     <string name="pref_button_set_host_online_notification_ringtone">pref_button_set_host_online_notification_ringtone</string>
     <string name="pref_button_set_host_online_notification_ringtone_title">Host online ringtone</string>
     <string name="no_internet_connection_message">No internet connection</string>
+    <string name="port_number_title_add_host">Port</string>
 
 </resources>

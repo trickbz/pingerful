@@ -33,7 +33,7 @@ public final class PingHelper {
         return haveConnectedWifi || haveConnectedMobile;
     }
 
-    public static boolean isHostAvailable(String hostNameOrIp, int port,  int timeoutMs) {
+    public static boolean PingPort(String hostNameOrIp, int port,  int timeoutMs) {
 
         boolean isAvailable = false;
         Socket sock = new Socket();

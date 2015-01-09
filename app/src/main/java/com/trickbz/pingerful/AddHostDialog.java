@@ -7,6 +7,7 @@ import android.app.DialogFragment;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.text.InputFilter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
@@ -26,6 +27,7 @@ public class AddHostDialog extends DialogFragment
 {
     private EditText _editTextHostTitle;
     private EditText _editTextHostNameOrIp;
+    private EditText _editTextPortNumber;
     private CheckBox _checkBoxSkip;
     private CheckBox _checkBoxNotifyPingFails;
 
@@ -33,6 +35,7 @@ public class AddHostDialog extends DialogFragment
     private static final String IS_NOTIFY_PING_FAILS = "IS_NOTIFY_PING_FAILS";
     private static final String HOST_TITLE_ARG_KEY = "HOST_TITLE_ARG_KEY";
     private static final String HOST_NAME_OR_IP_ARG_KEY = "HOST_NAME_OR_IP_ARG_KEY";
+    private static final String PORT_NUMBER_ARG_KEY = "PORT_NUMBER_ARG_KEY";
     private static final String CREATE_OR_UPDATE_ARG_KEY = "CREATE_OR_UPDATE_ARG_KEY";
     private static final String SUBMIT_BUTTON_TITLE_ARG_KEY = "SUBMIT_BUTTON_TITLE_ARG_KEY";
     private static final String HOST_ID_FOR_EDIT_ARG_KEY = "HOST_ID";
@@ -53,6 +56,7 @@ public class AddHostDialog extends DialogFragment
         args.putBoolean(IS_NOTIFY_PING_FAILS, operationType != CreateUpdate.CREATE && host.notifyWhenPingFails);
         args.putString(HOST_TITLE_ARG_KEY, host.title);
         args.putString(HOST_NAME_OR_IP_ARG_KEY, host.nameOrIp);
+        args.putString(PORT_NUMBER_ARG_KEY, host.portNumber);
         args.putInt(CREATE_OR_UPDATE_ARG_KEY, operationType.value());
         args.putString(SUBMIT_BUTTON_TITLE_ARG_KEY, operationType == CreateUpdate.CREATE ? "Create" : "Update");
         args.putLong(HOST_ID_FOR_EDIT_ARG_KEY, operationType == CreateUpdate.CREATE ? -1 : host.getId());
@@ -70,12 +74,14 @@ public class AddHostDialog extends DialogFragment
 
         _editTextHostTitle = (EditText) view.findViewById(R.id.edit_host_title_add_host);
         _editTextHostNameOrIp = (EditText) view.findViewById(R.id.edit_host_ip_add_host);
+        _editTextPortNumber = (EditText) view.findViewById(R.id.edit_port_number_add_host);
         _checkBoxSkip = (CheckBox) view.findViewById(R.id.checkbox_is_active_add_host);
         _checkBoxNotifyPingFails = (CheckBox) view.findViewById(R.id.checkbox_notify_ping_fails);
 
         Bundle arguments = getArguments();
         String hostTitle = arguments.getString(HOST_TITLE_ARG_KEY, "");
         String hostNameOrIp = arguments.getString(HOST_NAME_OR_IP_ARG_KEY, "");
+        String portNumber = arguments.getString(PORT_NUMBER_ARG_KEY);
         boolean skipHost = arguments.getBoolean(IS_HOST_ACTIVE_ARG_KEY, true);
         boolean notifyPingFails = arguments.getBoolean(IS_NOTIFY_PING_FAILS, false);
         _operationType = CreateUpdate.values()[arguments.getInt(CREATE_OR_UPDATE_ARG_KEY)];
@@ -87,6 +93,8 @@ public class AddHostDialog extends DialogFragment
 
         _editTextHostTitle.setText(hostTitle);
         _editTextHostNameOrIp.setText(hostNameOrIp);
+        _editTextPortNumber.setFilters(new InputFilter[] { new InputFilterMinMax(0, 65535) });
+        if (portNumber != null) _editTextPortNumber.setText(portNumber);
         _checkBoxSkip.setChecked(skipHost);
         _checkBoxNotifyPingFails.setChecked(notifyPingFails);
 
@@ -163,7 +171,7 @@ public class AddHostDialog extends DialogFragment
     public void onStart()
     {
         super.onStart();    //super.onStart() is where dialog.show() is actually called on the underlying dialog, so we have to do it after this point
-        final AlertDialog alertDialog = (AlertDialog)getDialog();
+        final AlertDialog alertDialog = (AlertDialog) getDialog();
         if(alertDialog != null)
         {
             Button positiveButton = alertDialog.getButton(Dialog.BUTTON_POSITIVE);
@@ -174,11 +182,13 @@ public class AddHostDialog extends DialogFragment
                 {
                     final EditText editHostTitle = (EditText) alertDialog.findViewById(R.id.edit_host_title_add_host);
                     final EditText editHostNameOrIP = (EditText) alertDialog.findViewById(R.id.edit_host_ip_add_host);
+                    final EditText editPortNumber = (EditText) alertDialog.findViewById(R.id.edit_port_number_add_host);
                     final CheckBox checkBoxIsActive = (CheckBox) alertDialog.findViewById(R.id.checkbox_is_active_add_host);
                     final CheckBox checkBoxNotifyPingFails = (CheckBox) alertDialog.findViewById(R.id.checkbox_notify_ping_fails);
 
                     String hostTitle = String.valueOf(editHostTitle.getText());
                     String hostNameOrIp = String.valueOf(editHostNameOrIP.getText());
+                    String portNumber = String.valueOf(editPortNumber.getText());
 
                     if (validateAddHostDialog(alertDialog, hostNameOrIp))
                     {
@@ -189,6 +199,7 @@ public class AddHostDialog extends DialogFragment
                         host.isActive = checkBoxIsActive.isChecked();
                         host.title = hostTitle;
                         host.nameOrIp = hostNameOrIp;
+                        if (portNumber != null) host.portNumber = portNumber;
                         host.notifyWhenPingFails = checkBoxNotifyPingFails.isChecked();
 
                         host.save();
