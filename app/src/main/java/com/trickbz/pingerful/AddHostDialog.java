@@ -134,9 +134,14 @@ public class AddHostDialog extends DialogFragment
                     final ProgressBar progressSpinner = (ProgressBar) view.findViewById(R.id.progress_spinner_check_host_add_host_dialog);
                     final ImageView hostStatusImage = (ImageView) view.findViewById(R.id.host_status_image_add_host);
                     final EditText editHostNameOrIp = (EditText) view.findViewById(R.id.edit_host_ip_add_host);
+                    final EditText editHostPortNumber = (EditText) view.findViewById(R.id.edit_port_number_add_host);
                     final String hostNameOrIp = String.valueOf(editHostNameOrIp.getText());
+                    final String portNumber = String.valueOf(editHostPortNumber.getText());
 
-                    if (validateAddHostDialog(getDialog(), hostNameOrIp)) {
+
+
+                    if (validateAddHostDialog(getDialog(), hostNameOrIp))
+                    {
                         view.setEnabled(false);
                         hostStatusImage.setVisibility(View.GONE);
                         progressSpinner.setVisibility(View.VISIBLE);
@@ -154,7 +159,9 @@ public class AddHostDialog extends DialogFragment
                                 view.setEnabled(true);
                             }
                         });
-                        taskPingHost.execute(hostNameOrIp);
+
+
+                        taskPingHost.execute(new HostNamePort(hostNameOrIp, portNumber));
                     }
                 }
                 else
