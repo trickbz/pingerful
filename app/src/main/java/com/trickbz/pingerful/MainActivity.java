@@ -1,7 +1,6 @@
 package com.trickbz.pingerful;
 
 import android.app.FragmentManager;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Handler;
@@ -40,6 +39,8 @@ public class MainActivity extends ActionBarActivity {
             _pingHandler.postDelayed(this, TimeUnit.MINUTES.toMillis(pingIntervalMinutes));
         }
     };
+    private final int CREATE_UPDATE_HOST_ACTIVITY_RESULT = 1;
+
 
 
     @Override
@@ -140,7 +141,8 @@ public class MainActivity extends ActionBarActivity {
         return true;
     }
 
-    private void LaunchDeleteHostDialog(long hostId) {
+    private void LaunchDeleteHostDialog(long hostId)
+    {
         FragmentManager fragmentManager = getFragmentManager();
         DeleteHostDialog dialog = DeleteHostDialog.newInstance(hostId);
         dialog.setCallback(new VoidCallback() {
@@ -152,13 +154,12 @@ public class MainActivity extends ActionBarActivity {
 
     private void LaunchAddHostDialog(Host host, CreateUpdate operationType)
     {
-        FragmentManager fragmentManager = getFragmentManager();
-        AddHostDialog dialog = AddHostDialog.newInstance(host, operationType);
-        dialog.setCallback(new VoidCallback() {
-            @Override
-            public void onActionFinished() { UpdateHostsList(); }
-        });
-        dialog.show(fragmentManager, getString(R.string.add_host_dialog_fragment_tag));
+        Intent editHostIntent = new Intent(this, EditHostActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putSerializable(EditHostActivity.CREATE_OR_UPDATE_EXTRAS_KEY, operationType);
+        bundle.putLong(EditHostActivity.HOST_ID_EXTRAS_KEY, operationType == CreateUpdate.UPDATE ? host.getId() : -1);
+        editHostIntent.putExtras(bundle);
+        startActivityForResult(editHostIntent, CREATE_UPDATE_HOST_ACTIVITY_RESULT);
     }
 
     public void onCreateHostButtonClick(View v) { LaunchAddHostDialog(new Host(), CreateUpdate.CREATE); }
@@ -230,6 +231,18 @@ public class MainActivity extends ActionBarActivity {
                     refreshItem.setActionView(null);
                     refreshItem.setVisible(false);
                 }
+            }
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data)
+    {
+        if (requestCode == CREATE_UPDATE_HOST_ACTIVITY_RESULT)
+        {
+            if (resultCode == RESULT_OK)
+            {
+                UpdateHostsList();
             }
         }
     }

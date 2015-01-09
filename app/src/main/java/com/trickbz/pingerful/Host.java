@@ -8,11 +8,12 @@ import com.activeandroid.annotation.Table;
 import com.activeandroid.query.Delete;
 import com.activeandroid.query.Select;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 
 @Table(name = "Hosts")
-public class Host extends Model {
+public class Host extends Model implements Serializable {
 
     @Column(name = "Title")
     public String title;
@@ -38,7 +39,6 @@ public class Host extends Model {
     @Column(name = "NotifyPingFails")
     public boolean notifyWhenPingFails;
 
-    @Nullable
     @Column(name = "Port")
     public String portNumber;
 

@@ -104,7 +104,7 @@
 
             <Button
 
-                android:id="@+id/check_host_add_host"
+                android:id="@+id/button_check_host_add_host"
                 android:text="@string/check_host_button_title_add_host_dialog"
                 android:layout_weight="0"
                 android:layout_height="wrap_content"

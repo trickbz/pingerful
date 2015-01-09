@@ -1,6 +1,8 @@
 package com.trickbz.pingerful;
 
-public enum CreateUpdate {
+import java.io.Serializable;
+
+public enum CreateUpdate implements Serializable {
 
     CREATE(0),
     UPDATE(1);
