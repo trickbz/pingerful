@@ -43,11 +43,14 @@ public class HostArrayAdapter extends ArrayAdapter<Host> {
             convertView = inflater.inflate(_layoutResourceId, parent, false);
         }
 
-        TextView tvTitle = (TextView) convertView.findViewById(R.id.host_title_list_host_item);
+        TextView textViewHostTitle = (TextView) convertView.findViewById(R.id.host_title_list_host_item);
+        String hostPortTitlePart = host.portNumber == null || host.portNumber.isEmpty() ? "" : String.format(":%s", host.portNumber);
+        String hostNameWithPortTitlePart = String.format("%s%s", host.nameOrIp, hostPortTitlePart);
+
         String hostTitle = host.title.isEmpty() ?
-                host.nameOrIp :
-                String.format("%s (%s)", host.title, host.nameOrIp);
-        tvTitle.setText(hostTitle);
+                hostNameWithPortTitlePart :
+                String.format("%s (%s)", host.title, hostNameWithPortTitlePart);
+        textViewHostTitle.setText(hostTitle);
 
         TextView tvLastChecked = (TextView) convertView.findViewById(R.id.last_checked_list_host_item);
         TextView tvLastOnline = (TextView) convertView.findViewById(R.id.last_online_list_host_item);

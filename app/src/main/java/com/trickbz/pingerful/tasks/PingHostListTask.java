@@ -6,6 +6,7 @@ import android.os.AsyncTask;
 import android.preference.PreferenceManager;
 
 import com.trickbz.pingerful.Host;
+import com.trickbz.pingerful.PingHostModel;
 import com.trickbz.pingerful.R;
 import com.trickbz.pingerful.helpers.NotificationService;
 import com.trickbz.pingerful.helpers.PingHelper;
@@ -37,8 +38,8 @@ public class PingHostListTask extends AsyncTask<Void, Void, Void> {
             if (host.isActive)
             {
                 boolean isOnlinePrevious = host.isOnline;
-
-                boolean pingPassed = PingHelper.PingHost(host.nameOrIp);
+                PingHostModel pingModel = new PingHostModel(host.nameOrIp, host.portNumber, host.checkPortOnly);
+                boolean pingPassed = PingHelper.PingByPingAndPort(pingModel);
                 Date currentDate = new Date();
                 host.isOnline = pingPassed;
                 host.lastCheckedDate = currentDate;

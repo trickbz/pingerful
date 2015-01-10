@@ -42,6 +42,9 @@ public class Host extends Model implements Serializable {
     @Column(name = "Port")
     public String portNumber;
 
+    @Column(name = "CheckPortOnly")
+    public boolean checkPortOnly;
+
     public Host() {
         super();
     }

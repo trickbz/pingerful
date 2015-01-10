@@ -1,23 +1,27 @@
 package com.trickbz.pingerful;
 
+import android.content.ClipData;
+import android.content.ClipboardManager;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.text.InputFilter;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.trickbz.pingerful.helpers.PingHelper;
+import com.trickbz.pingerful.tasks.IpAddressByHostNameTask;
 import com.trickbz.pingerful.tasks.PingHostTask;
+import com.trickbz.pingerful.tasks.StringCallback;
 import com.trickbz.pingerful.tasks.TaskCompletedBooleanCallback;
 
 public class EditHostActivity extends ActionBarActivity
@@ -31,6 +35,8 @@ public class EditHostActivity extends ActionBarActivity
     private ImageView _imageCheckStatus;
     private ProgressBar _progressSpinner;
     private Button _buttonCheckHost;
+    private TextView _textViewHostIp;
+    private CheckBox _checkBoxCheckPortOnly;
 
     // bundle keys
     public final static String CREATE_OR_UPDATE_EXTRAS_KEY = "CREATE_OR_UPDATE_EXTRAS_KEY";
@@ -45,19 +51,14 @@ public class EditHostActivity extends ActionBarActivity
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.dialog_add_host);
+        setContentView(R.layout.activity_edit_host);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         _operationType = (CreateUpdate) getIntent().getSerializableExtra(CREATE_OR_UPDATE_EXTRAS_KEY);
         _hostId = getIntent().getLongExtra(HOST_ID_EXTRAS_KEY, -1);
         _host = _operationType == CreateUpdate.CREATE ? new Host() : Host.getById(_hostId);
 
-        String hostTitle = _host.title;
-        String hostNameOrIp = _host.nameOrIp;
-
-        String dialogTitle = _operationType == CreateUpdate.CREATE ?
-                "Create Host" :
-                String.format("Update '%s' host", hostTitle == null || hostTitle.isEmpty() ? hostNameOrIp : hostTitle);
+        String dialogTitle = _operationType == CreateUpdate.CREATE ? "Create Host" : "Update Host";
         setTitle(dialogTitle);
 
         // getting control references
@@ -69,14 +70,18 @@ public class EditHostActivity extends ActionBarActivity
         _imageCheckStatus = (ImageView) findViewById(R.id.host_status_image_add_host);
         _progressSpinner = (ProgressBar) findViewById(R.id.progress_spinner_check_host_add_host_dialog);
         _buttonCheckHost = (Button) findViewById(R.id.button_check_host_add_host);
+        _textViewHostIp = (TextView) findViewById(R.id.text_view_ip_edit_host);
+        _checkBoxCheckPortOnly = (CheckBox) findViewById(R.id.checkbox_check_port_only);
 
         // setting initial data of controls
         _editTextHostTitle.setText(_host.title);
         _editTextHostNameOrIp.setText(_host.nameOrIp);
+        _editTextPortNumber.setFilters(new InputFilter[] { new InputFilterMinMax(0, 65535) });
         _editTextPortNumber.setText(_host.portNumber);
         _checkBoxIsActive.setChecked(_operationType == CreateUpdate.CREATE || _host.isActive);
         _checkBoxNotifyPingFails.setChecked(_operationType != CreateUpdate.CREATE && _host.notifyWhenPingFails);
         _buttonCheckHost.setOnClickListener(checkHostListener);
+        _checkBoxCheckPortOnly.setChecked(_host.checkPortOnly);
     }
 
     @Override
@@ -114,6 +119,7 @@ public class EditHostActivity extends ActionBarActivity
             host.nameOrIp = hostNameOrIp;
             if (portNumber != null) host.portNumber = portNumber;
             host.notifyWhenPingFails = _checkBoxNotifyPingFails.isChecked();
+            host.checkPortOnly = _checkBoxCheckPortOnly.isChecked();
             host.save();
             this.setResult(RESULT_OK);
             finish();
@@ -127,6 +133,7 @@ public class EditHostActivity extends ActionBarActivity
             {
                 final String hostNameOrIp = String.valueOf(_editTextHostNameOrIp.getText());
                 final String portNumber = String.valueOf(_editTextPortNumber.getText());
+                final boolean isCheckPortOnly = _checkBoxCheckPortOnly.isChecked();
 
                 if (validateAddHostDialog())
                 {
@@ -136,7 +143,16 @@ public class EditHostActivity extends ActionBarActivity
 
                     PingHostTask taskPingHost = new PingHostTask();
                     taskPingHost.setCallback(pingTaskCompletedCallback);
-                    taskPingHost.execute(new HostNamePort(hostNameOrIp, portNumber));
+                    taskPingHost.execute(new PingHostModel(hostNameOrIp, portNumber, isCheckPortOnly));
+
+                    IpAddressByHostNameTask ipByHostNameTask = new IpAddressByHostNameTask();
+                    ipByHostNameTask.setCallback(new StringCallback() {
+                        @Override
+                        public void onActionFinished(String stringResult) {
+                        _textViewHostIp.setText(stringResult);
+                        }
+                    });
+                    ipByHostNameTask.execute(hostNameOrIp);
                 }
             }
             else
@@ -169,5 +185,14 @@ public class EditHostActivity extends ActionBarActivity
             _editTextHostNameOrIp.setError(getString(R.string.host_name_or_ip_required_error_message));
         }
         return isHostValid;
+    }
+
+    public void onIpAddressTextViewClick(View view)
+    {
+        String ipAddress = _textViewHostIp.getText().toString();
+        ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+        ClipData clipData = ClipData.newPlainText("Host IP address", ipAddress);
+        clipboard.setPrimaryClip(clipData);
+        Toast.makeText(this, "IP copied to clipboard", Toast.LENGTH_SHORT).show();
     }
 }

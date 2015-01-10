@@ -3,12 +3,15 @@ package com.trickbz.pingerful.helpers;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+
+import com.google.common.net.InetAddresses;
+import com.trickbz.pingerful.PingHostModel;
+
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.net.SocketAddress;
-import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
 
 public final class PingHelper {
@@ -33,15 +36,17 @@ public final class PingHelper {
         return haveConnectedWifi || haveConnectedMobile;
     }
 
-    public static boolean PingPort(String hostNameOrIp, int port,  int timeoutMs) {
-
+    public static boolean PingPort(String hostNameOrIp, int port,  int timeoutMs)
+    {
         boolean isAvailable = false;
         Socket sock = new Socket();
 
-        try {
-
-            InetAddress ip = inetAddressByHostName(hostNameOrIp);
-            if (ip != null) {
+        try
+        {
+            boolean isValidIpAddress = InetAddresses.isInetAddress(hostNameOrIp);
+            InetAddress ip = isValidIpAddress ? InetAddresses.forString(hostNameOrIp) : inetAddressByHostName(hostNameOrIp);
+            if (ip != null)
+            {
                 SocketAddress socketAddress = new InetSocketAddress(ip, port);
                 // This method will block no more than timeoutMs.
                 // If the timeout occurs, SocketTimeoutException is thrown.
@@ -50,13 +55,7 @@ public final class PingHelper {
                 sock.close();
             }
 
-        } catch(UnknownHostException e) {
-
-        } catch (SocketTimeoutException e) {
-
-        } catch (IOException e) {
-
-        }
+        } catch (IOException ignored) {}
 
         return isAvailable;
     }
@@ -95,5 +94,30 @@ public final class PingHelper {
         }
 
         return isPingPassed;
+    }
+
+    public static boolean PingByPingAndPort(PingHostModel model)
+    {
+        boolean pingPassed = false;
+        String nameOrIp = model.get_nameOrIp();
+        String portString = model.get_port();
+        if (!model.is_ignorePingCheck()) pingPassed = PingHelper.PingHost(nameOrIp);
+        if (portString != null && !portString.isEmpty())
+        {
+            int port = Integer.parseInt(portString);
+            boolean portOpened = PingHelper.PingPort(nameOrIp, port, 1000);
+            pingPassed = pingPassed || portOpened;
+        }
+        return pingPassed;
+    }
+
+    public static String GetIpByHostName(String hostName) {
+        String ipAddressString = "";
+        final InetAddress inetAddress;
+        try {
+            inetAddress = InetAddress.getByName(hostName);
+            ipAddressString = inetAddress.getHostAddress();
+        } catch (UnknownHostException e) {}
+        return ipAddressString;
     }
 }

@@ -2,40 +2,30 @@ package com.trickbz.pingerful.tasks;
 
 import android.os.AsyncTask;
 
-import com.trickbz.pingerful.HostNamePort;
+import com.trickbz.pingerful.PingHostModel;
 import com.trickbz.pingerful.helpers.PingHelper;
 
-public class PingHostTask extends AsyncTask<HostNamePort, Void, Boolean> {
+public class PingHostTask extends AsyncTask<PingHostModel, Void, Boolean> {
 
-    private HostNamePort _nameAndPort;
+    private PingHostModel _model;
     private TaskCompletedBooleanCallback callback;
 
     @Override
-    protected Boolean doInBackground(HostNamePort... params) {
-
-        _nameAndPort = params[0];
-        String nameOrIp = _nameAndPort.get_nameOrIp();
-        String portString = _nameAndPort.get_port();
-        boolean pingPassed = PingHelper.PingHost(nameOrIp);
-        if (portString != null && !portString.isEmpty())
-        {
-            int port = Integer.parseInt(portString);
-            boolean portOpened = PingHelper.PingPort(nameOrIp, port, 1000);
-            pingPassed = pingPassed && portOpened;
-        }
-        return pingPassed;
+    protected Boolean doInBackground(PingHostModel... params)
+    {
+        _model = params[0];
+        return PingHelper.PingByPingAndPort(_model);
     }
 
     @Override
-    protected void onPostExecute(Boolean aBoolean) {
-        super.onPostExecute(aBoolean);
-
-        callback.taskCompletedBooleanCallback(aBoolean);
+    protected void onPostExecute(Boolean result)
+    {
+        super.onPostExecute(result);
+        callback.taskCompletedBooleanCallback(result);
     }
 
-    public void setCallback(TaskCompletedBooleanCallback callback) {
-
+    public void setCallback(TaskCompletedBooleanCallback callback)
+    {
         this.callback = callback;
-
     }
 }
