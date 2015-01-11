@@ -9,10 +9,14 @@ public final class GeneralHelper {
 
     private GeneralHelper() {}
 
-    public static String toShortDateTimeFormat(Date date) {
-
-        Format formatter = new SimpleDateFormat("MM-yy HH:mm");
-        String formattedDate = formatter.format(date);
+    public static String toShortDateTimeFormat(Date date)
+    {
+        String formattedDate = "**-** **:**";
+        if (date != null)
+        {
+            Format formatter = new SimpleDateFormat("MM-yy HH:mm");
+            formattedDate = formatter.format(date);
+        }
         return formattedDate;
     }
 

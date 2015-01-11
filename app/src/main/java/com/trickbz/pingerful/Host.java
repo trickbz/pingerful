@@ -56,7 +56,7 @@ public class Host extends Model implements Serializable {
         this.isActive = another.isActive;
         this.lastCheckedDate = null;
         this.lastOnlineDate = null;
-        this.isOnline = another.isOnline;
+        this.isOnline = false;
         // /this.position = another.position ?
         this.notifyWhenPingFails = another.notifyWhenPingFails;
         this.portNumber = another.portNumber;
