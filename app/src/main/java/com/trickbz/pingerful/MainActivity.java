@@ -51,7 +51,7 @@ public class MainActivity extends ActionBarActivity {
 
         // TODO - find a find to do the same from XML
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-        getSupportActionBar().setLogo(R.drawable.ping);
+        getSupportActionBar().setLogo(R.drawable.ping_green);
         getSupportActionBar().setDisplayUseLogoEnabled(true);
 
         _adapterListViewHosts = new HostArrayAdapter(this, R.layout.host_list_item, _hosts);
