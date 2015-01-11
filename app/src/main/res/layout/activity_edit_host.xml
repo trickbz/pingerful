@@ -45,7 +45,6 @@
             android:layout_height="wrap_content"
             android:inputType="textNoSuggestions|textEmailAddress" />
 
-
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -133,41 +132,27 @@
 
         </LinearLayout>
 
-        <LinearLayout
+        <CheckBox
+            android:id="@+id/checkbox_is_active_add_host"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:checked="true"
+            android:text="@string/checkbox_skip_host_title"
+        />
 
-            <CheckBox
-                android:id="@+id/checkbox_is_active_add_host"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:checked="true"
-                android:text="@string/checkbox_skip_host_title"
-            />
-
-            <CheckBox
-                android:id="@+id/checkbox_notify_ping_fails"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
-                android:layout_marginStart="20dp"
-                android:checked="false"
-                android:text="@string/checkbox_notify_ping_fails" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
+        <CheckBox
+            android:id="@+id/checkbox_notify_ping_fails"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:checked="false"
+            android:text="@string/checkbox_notify_ping_fails" />
 
-            <CheckBox
-                android:id="@+id/checkbox_show_title_only_add_host"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:checked="false"
-                android:text="@string/checkbox_show_title_only_add_host_title" />
+        <CheckBox
+            android:id="@+id/checkbox_show_title_only_add_host"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checked="false"
+            android:text="@string/checkbox_show_title_only_add_host_title" />
 
-        </LinearLayout>
     </LinearLayout>
 </ScrollView>

@@ -5,7 +5,9 @@ import android.content.ClipboardManager;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.text.Editable;
 import android.text.InputFilter;
+import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -77,14 +79,47 @@ public class EditHostActivity extends ActionBarActivity
 
         // setting initial data of controls
         _editTextHostTitle.setText(_host.title);
+        _editTextHostTitle.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {}
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                _checkBoxShowTitleOnly.setEnabled(s.length() > 0);
+                _checkBoxShowTitleOnly.setChecked(s.length() > 0);
+            }
+        });
+
         _editTextHostNameOrIp.setText(_host.nameOrIp);
-        _editTextPortNumber.setFilters(new InputFilter[] { new InputFilterMinMax(0, 65535) });
+
+        _editTextPortNumber.setFilters(new InputFilter[]{new InputFilterMinMax(0, 65535)});
         _editTextPortNumber.setText(_host.portNumber);
+        _editTextPortNumber.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {}
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                _checkBoxCheckPortOnly.setEnabled(s.length() > 0);
+                _checkBoxCheckPortOnly.setChecked(s.length() > 0);
+            }
+        });
+
         _checkBoxIsActive.setChecked(_operationType == CreateUpdate.CREATE || _host.isActive);
         _checkBoxNotifyPingFails.setChecked(_operationType != CreateUpdate.CREATE && _host.notifyWhenPingFails);
         _buttonCheckHost.setOnClickListener(checkHostListener);
+
         _checkBoxCheckPortOnly.setChecked(_host.checkPortOnly);
+        _checkBoxCheckPortOnly.setEnabled(_host.portNumber != null && !_host.portNumber.isEmpty());
+
         _checkBoxShowTitleOnly.setChecked(_host.showTitleOnly);
+        _checkBoxShowTitleOnly.setEnabled(_host.title != null && !_host.title.isEmpty());
     }
 
     @Override
