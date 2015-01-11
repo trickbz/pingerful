@@ -22,7 +22,7 @@ public final class NotificationService {
         String hostTitle = host.title.isEmpty() ?
                 host.nameOrIp :
                 String.format("%s (%s)", host.title, host.nameOrIp);
-        notify(context, host, "Ping failed", hostTitle, R.string.pref_button_set_ping_fails_notification_ringtone);
+        notify(context, host, "Ping failed", hostTitle, R.string.pref_button_set_ping_fails_notification_ringtone, R.drawable.ping_red);
     }
 
     public static void notifyHostOnline(Context context, Host host)
@@ -30,10 +30,10 @@ public final class NotificationService {
         String hostTitle = host.title.isEmpty() ?
                 host.nameOrIp :
                 String.format("%s (%s)", host.title, host.nameOrIp);
-        notify(context, host, "Host online", hostTitle, R.string.pref_button_set_host_online_notification_ringtone);
+        notify(context, host, "Host online", hostTitle, R.string.pref_button_set_host_online_notification_ringtone, R.drawable.ping_green);
     }
 
-    private static void notify(Context context, Host host, String title, String message, int ringtoneResourceId)
+    private static void notify(Context context, Host host, String title, String message, int ringtoneResourceId, int iconResourceId)
     {
         final SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);
         Uri defaultNotificationUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
@@ -46,7 +46,7 @@ public final class NotificationService {
 
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context);
         Notification notification = builder
-                .setSmallIcon(R.drawable.ping)
+                .setSmallIcon(iconResourceId)
                 .setContentTitle(title)
                 .setContentText(message)
                 .setAutoCancel(true)
