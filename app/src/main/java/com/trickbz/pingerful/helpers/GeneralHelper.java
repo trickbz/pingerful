@@ -11,12 +11,8 @@ public final class GeneralHelper {
 
     public static String toShortDateTimeFormat(Date date)
     {
-        String formattedDate = "**-** **:**";
-        if (date != null)
-        {
-            Format formatter = new SimpleDateFormat("MM-yy HH:mm");
-            formattedDate = formatter.format(date);
-        }
+        Format formatter = new SimpleDateFormat("MM-yy HH:mm");
+        String formattedDate = formatter.format(date);
         return formattedDate;
     }
 

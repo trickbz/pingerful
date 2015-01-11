@@ -55,8 +55,8 @@ public class HostArrayAdapter extends ArrayAdapter<Host> {
         TextView tvLastChecked = (TextView) convertView.findViewById(R.id.last_checked_list_host_item);
         TextView tvLastOnline = (TextView) convertView.findViewById(R.id.last_online_list_host_item);
 
-        String lastCheckedMessage= GeneralHelper.toShortDateTimeFormat(host.lastCheckedDate);
-        String lastOnlineMessage = GeneralHelper.toShortDateTimeFormat(host.lastOnlineDate);
+        String lastCheckedMessage= host.lastCheckedDate == null ? "Never" : GeneralHelper.toShortDateTimeFormat(host.lastCheckedDate);
+        String lastOnlineMessage = host.lastOnlineDate  == null ? "Never" : GeneralHelper.toShortDateTimeFormat(host.lastOnlineDate);
 
         tvLastChecked.setText(lastCheckedMessage);
         tvLastOnline.setText(lastOnlineMessage);

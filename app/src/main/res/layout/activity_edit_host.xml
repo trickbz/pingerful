@@ -88,6 +88,19 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
+            <Button
+
+                android:id="@+id/button_check_host_add_host"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end|center_vertical"
+                android:text="@string/check_host_button_title_add_host_dialog"/>
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1" />
+
             <TextView
                 android:id="@+id/text_view_ip_edit_host"
                 android:layout_width="wrap_content"
@@ -96,45 +109,28 @@
                 android:textSize="18sp"
                 android:onClick="onIpAddressTextViewClick"
                 android:clickable="true"
-             />
+                />
 
-            <View
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_weight="1" />
-
-            <LinearLayout
+            <ImageView
+                android:id="@+id/host_status_image_add_host"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical|end"
+                android:layout_marginLeft="4dp"
+                android:layout_marginStart="4dp"
+                android:src="@drawable/ok_green_32px"
+                android:visibility="invisible"
+                android:contentDescription="Host online / offline status" />
 
-                <ImageView
-                    android:id="@+id/host_status_image_add_host"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical|end"
-                    android:layout_marginRight="4dp"
-                    android:layout_marginEnd="4dp"
-                    android:src="@drawable/ok_green_32px"
-                    android:visibility="invisible"
-                    android:contentDescription="Host online / offline status" />
+            <ProgressBar
+                android:id="@+id/progress_spinner_check_host_add_host_dialog"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_gravity="center_vertical|end"
+                android:layout_marginLeft="4dp"
+                android:layout_marginStart="4dp"
+                android:visibility="gone" />
 
-                <ProgressBar
-                    android:id="@+id/progress_spinner_check_host_add_host_dialog"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical|end"
-                    android:visibility="gone" />
-
-                <Button
-
-                    android:id="@+id/button_check_host_add_host"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="end|center_vertical"
-                    android:text="@string/check_host_button_title_add_host_dialog"
-
-                    />
-            </LinearLayout>
         </LinearLayout>
 
         <LinearLayout
