@@ -35,7 +35,7 @@
     <string name="no_internet_connection_message">No internet connection</string>
     <string name="port_number_title_add_host">Port number</string>
     <string name="checkbox_check_port_only_text">Check port only</string>
-    <string name="host_title_text_edit_host">Title</string>
+    <string name="host_title_text_edit_host">Host Title</string>
     <string name="checkbox_show_title_only_add_host_title">Show title only</string>
 
 </resources>
