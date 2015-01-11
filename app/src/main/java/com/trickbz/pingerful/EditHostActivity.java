@@ -37,6 +37,7 @@ public class EditHostActivity extends ActionBarActivity
     private Button _buttonCheckHost;
     private TextView _textViewHostIp;
     private CheckBox _checkBoxCheckPortOnly;
+    private CheckBox _checkBoxShowTitleOnly;
 
     // bundle keys
     public final static String CREATE_OR_UPDATE_EXTRAS_KEY = "CREATE_OR_UPDATE_EXTRAS_KEY";
@@ -72,6 +73,7 @@ public class EditHostActivity extends ActionBarActivity
         _buttonCheckHost = (Button) findViewById(R.id.button_check_host_add_host);
         _textViewHostIp = (TextView) findViewById(R.id.text_view_ip_edit_host);
         _checkBoxCheckPortOnly = (CheckBox) findViewById(R.id.checkbox_check_port_only);
+        _checkBoxShowTitleOnly = (CheckBox) findViewById(R.id.checkbox_show_title_only_add_host);
 
         // setting initial data of controls
         _editTextHostTitle.setText(_host.title);
@@ -82,6 +84,7 @@ public class EditHostActivity extends ActionBarActivity
         _checkBoxNotifyPingFails.setChecked(_operationType != CreateUpdate.CREATE && _host.notifyWhenPingFails);
         _buttonCheckHost.setOnClickListener(checkHostListener);
         _checkBoxCheckPortOnly.setChecked(_host.checkPortOnly);
+        _checkBoxShowTitleOnly.setChecked(_host.showTitleOnly);
     }
 
     @Override
@@ -120,6 +123,7 @@ public class EditHostActivity extends ActionBarActivity
             if (portNumber != null) host.portNumber = portNumber;
             host.notifyWhenPingFails = _checkBoxNotifyPingFails.isChecked();
             host.checkPortOnly = _checkBoxCheckPortOnly.isChecked();
+            host.showTitleOnly = _checkBoxShowTitleOnly.isChecked();
             host.save();
             this.setResult(RESULT_OK);
             finish();

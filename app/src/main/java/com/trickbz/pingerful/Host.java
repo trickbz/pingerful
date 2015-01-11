@@ -45,6 +45,9 @@ public class Host extends Model implements Serializable {
     @Column(name = "CheckPortOnly")
     public boolean checkPortOnly;
 
+    @Column(name = "ShowTitleOnly")
+    public boolean showTitleOnly;
+
     public Host() {
         super();
     }
@@ -61,6 +64,7 @@ public class Host extends Model implements Serializable {
         this.notifyWhenPingFails = another.notifyWhenPingFails;
         this.portNumber = another.portNumber;
         this.checkPortOnly = another.checkPortOnly;
+        this.showTitleOnly = another.showTitleOnly;
     }
 
     public static ArrayList<Host> all()

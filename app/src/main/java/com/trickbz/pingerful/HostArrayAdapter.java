@@ -44,13 +44,18 @@ public class HostArrayAdapter extends ArrayAdapter<Host> {
         }
 
         TextView textViewHostTitle = (TextView) convertView.findViewById(R.id.host_title_list_host_item);
-        String hostPortTitlePart = host.portNumber == null || host.portNumber.isEmpty() ? "" : String.format(":%s", host.portNumber);
-        String hostNameWithPortTitlePart = String.format("%s%s", host.nameOrIp, hostPortTitlePart);
+        String portFormatted = String.format(host.checkPortOnly ? ":<font color='silver'>%s</font>" : ":%s", host.portNumber);
+        String portPart = host.portNumber == null || host.portNumber.isEmpty() ? "" : portFormatted;
+        String hostNameWithPortPart = String.format("%s%s", host.nameOrIp, portPart);
 
-        String hostTitle = host.title.isEmpty() ?
-                hostNameWithPortTitlePart :
-                String.format("%s (%s)", host.title, hostNameWithPortTitlePart);
-        textViewHostTitle.setText(hostTitle);
+        String hostTitle = hostNameWithPortPart;
+        if (host.title != null && !host.title.isEmpty())
+        {
+            hostTitle = host.showTitleOnly ?
+                host.title :
+                String.format("%s (%s)", host.title, hostNameWithPortPart);
+        }
+        textViewHostTitle.setText(Html.fromHtml(hostTitle));
 
         TextView tvLastChecked = (TextView) convertView.findViewById(R.id.last_checked_list_host_item);
         TextView tvLastOnline = (TextView) convertView.findViewById(R.id.last_online_list_host_item);
@@ -88,6 +93,7 @@ public class HostArrayAdapter extends ArrayAdapter<Host> {
             }
         });
         checkBoxSkip.setChecked(host.isActive);
+
         return convertView;
     }
 
