@@ -4,7 +4,8 @@ public enum  HostContextMenuItem {
 
     UPDATE(0),
     DELETE(1),
-    FORCE_PING(2);
+    FORCE_PING(2),
+    DUPLICATE(3);
 
     private int value;
 

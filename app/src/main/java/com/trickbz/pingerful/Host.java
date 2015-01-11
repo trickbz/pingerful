@@ -49,10 +49,31 @@ public class Host extends Model implements Serializable {
         super();
     }
 
+    public Host(Host another)
+    {
+        this.title = another.title;
+        this.nameOrIp = another.nameOrIp;
+        this.isActive = another.isActive;
+        this.lastCheckedDate = null;
+        this.lastOnlineDate = null;
+        this.isOnline = another.isOnline;
+        // /this.position = another.position ?
+        this.notifyWhenPingFails = another.notifyWhenPingFails;
+        this.portNumber = another.portNumber;
+        this.checkPortOnly = another.checkPortOnly;
+    }
+
     public static ArrayList<Host> all()
     {
         ArrayList<Host> hosts = new Select().from(Host.class).execute();
         return  hosts;
+    }
+
+    public static Host Duplicate(Host hostToDuplicate)
+    {
+        Host copy = new Host(hostToDuplicate);
+        copy.save();
+        return copy;
     }
 
     public static Host getById(long hostId)

@@ -62,7 +62,7 @@ public class MainActivity extends ActionBarActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id)
             {
                 Host host = _adapterListViewHosts.getItem(position);
-                hostDetails(host, CreateUpdate.UPDATE);
+                gotoHostDetailsActivity(host, CreateUpdate.UPDATE);
             }
         });
         findViewById(R.id.button_ping_all).performClick();
@@ -118,7 +118,8 @@ public class MainActivity extends ActionBarActivity {
 
         menu.add(1, host.getId().intValue(), HostContextMenuItem.UPDATE.value(), "Edit");
         menu.add(1, host.getId().intValue(), HostContextMenuItem.DELETE.value(), "Delete");
-        menu.add(1, host.getId().intValue(), HostContextMenuItem.FORCE_PING.value(), "Force ping");
+        menu.add(1, host.getId().intValue(), HostContextMenuItem.DUPLICATE.value(), "Duplicate");
+        menu.add(2, host.getId().intValue(), HostContextMenuItem.FORCE_PING.value(), "Force ping");
     }
 
     @Override
@@ -131,12 +132,15 @@ public class MainActivity extends ActionBarActivity {
 
         switch (selectedContextMenuItem) {
             case UPDATE:
-                hostDetails(host, CreateUpdate.UPDATE);
+                gotoHostDetailsActivity(host, CreateUpdate.UPDATE);
                 break;
             case DELETE:
                 LaunchDeleteHostDialog(host.getId());
                 break;
             case FORCE_PING:
+                break;
+            case DUPLICATE:
+                duplicateHost(host);
                 break;
         }
         return true;
@@ -153,7 +157,7 @@ public class MainActivity extends ActionBarActivity {
         dialog.show(fragmentManager, getString(R.string.delete_host_dialog_tag));
     }
 
-    private void hostDetails(Host host, CreateUpdate operationType)
+    private void gotoHostDetailsActivity(Host host, CreateUpdate operationType)
     {
         Intent editHostIntent = new Intent(this, EditHostActivity.class);
         Bundle bundle = new Bundle();
@@ -163,7 +167,13 @@ public class MainActivity extends ActionBarActivity {
         startActivityForResult(editHostIntent, CREATE_UPDATE_HOST_ACTIVITY_RESULT);
     }
 
-    public void onCreateHostButtonClick(View v) { hostDetails(new Host(), CreateUpdate.CREATE); }
+    private void duplicateHost(Host hostToDuplicate)
+    {
+        Host.Duplicate(hostToDuplicate);
+        UpdateHostsList();
+    }
+
+    public void onCreateHostButtonClick(View v) { gotoHostDetailsActivity(new Host(), CreateUpdate.CREATE); }
 
     private void UpdateHostsList()
     {
