@@ -101,7 +101,7 @@ public final class PingHelper {
         boolean pingPassed = false;
         String nameOrIp = model.get_nameOrIp();
         String portString = model.get_port();
-        if (!model.is_ignorePingCheck()) pingPassed = PingHelper.PingHost(nameOrIp);
+        if (!model.is_checkPortOnly()) pingPassed = PingHelper.PingHost(nameOrIp);
         if (portString != null && !portString.isEmpty())
         {
             int port = Integer.parseInt(portString);
