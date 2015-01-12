@@ -10,7 +10,7 @@
         android:theme="@style/AppTheme"
     >
 
-        <activity android:name=".MainActivity"
+        <activity android:name=".activities.MainActivity"
             android:theme="@style/AppTheme"
             android:label="@string/app_name"
         >
@@ -20,13 +20,13 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".EditHostActivity"
+        <activity android:name=".activities.EditHostActivity"
             android:label="Edit Host Title To Set From Code"
-            android:parentActivityName=".MainActivity"
+            android:parentActivityName=".activities.MainActivity"
         >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".MainActivity"
+                android:value=".activities.MainActivity"
             />
         </activity>
 
@@ -37,7 +37,7 @@
             android:value="com.trickbz.pingerful.model.Host"
         />
 
-        <activity android:name=".PreferencesActivity"
+        <activity android:name=".activities.PreferencesActivity"
             android:theme="@style/AppTheme"
             android:label="Settings"
         />

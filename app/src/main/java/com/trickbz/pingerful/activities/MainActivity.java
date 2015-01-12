@@ -1,4 +1,4 @@
-package com.trickbz.pingerful;
+package com.trickbz.pingerful.activities;
 
 import android.app.FragmentManager;
 import android.content.Intent;
@@ -15,6 +15,12 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.trickbz.pingerful.CreateUpdate;
+import com.trickbz.pingerful.DeleteHostDialog;
+import com.trickbz.pingerful.Host;
+import com.trickbz.pingerful.HostArrayAdapter;
+import com.trickbz.pingerful.HostContextMenuItem;
+import com.trickbz.pingerful.R;
 import com.trickbz.pingerful.helpers.PingHelper;
 import com.trickbz.pingerful.tasks.PingHostListTask;
 import com.trickbz.pingerful.tasks.VoidCallback;
@@ -152,7 +158,9 @@ public class MainActivity extends ActionBarActivity {
         DeleteHostDialog dialog = DeleteHostDialog.newInstance(hostId);
         dialog.setCallback(new VoidCallback() {
             @Override
-            public void onActionFinished() { UpdateHostsList(); }
+            public void onActionFinished() {
+                UpdateHostsList();
+            }
         });
         dialog.show(fragmentManager, getString(R.string.delete_host_dialog_tag));
     }

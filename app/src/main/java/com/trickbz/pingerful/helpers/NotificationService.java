@@ -12,7 +12,7 @@ import android.preference.PreferenceManager;
 import android.support.v4.app.NotificationCompat;
 
 import com.trickbz.pingerful.Host;
-import com.trickbz.pingerful.MainActivity;
+import com.trickbz.pingerful.activities.MainActivity;
 import com.trickbz.pingerful.R;
 
 public final class NotificationService {

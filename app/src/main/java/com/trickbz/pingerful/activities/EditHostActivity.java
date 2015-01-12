@@ -1,4 +1,4 @@
-package com.trickbz.pingerful;
+package com.trickbz.pingerful.activities;
 
 import android.content.ClipData;
 import android.content.ClipboardManager;
@@ -20,6 +20,11 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.trickbz.pingerful.CreateUpdate;
+import com.trickbz.pingerful.Host;
+import com.trickbz.pingerful.InputFilterMinMax;
+import com.trickbz.pingerful.PingHostModel;
+import com.trickbz.pingerful.R;
 import com.trickbz.pingerful.helpers.PingHelper;
 import com.trickbz.pingerful.tasks.IpAddressByHostNameTask;
 import com.trickbz.pingerful.tasks.PingHostTask;
@@ -87,9 +92,10 @@ public class EditHostActivity extends ActionBarActivity
             public void onTextChanged(CharSequence s, int start, int before, int count) {}
 
             @Override
-            public void afterTextChanged(Editable s) {
+            public void afterTextChanged(Editable s)
+            {
                 _checkBoxShowTitleOnly.setEnabled(s.length() > 0);
-                _checkBoxShowTitleOnly.setChecked(s.length() > 0);
+                if (s.length() == 0) _checkBoxShowTitleOnly.setChecked(false);
             }
         });
 
@@ -105,9 +111,10 @@ public class EditHostActivity extends ActionBarActivity
             public void onTextChanged(CharSequence s, int start, int before, int count) {}
 
             @Override
-            public void afterTextChanged(Editable s) {
+            public void afterTextChanged(Editable s)
+            {
                 _checkBoxCheckPortOnly.setEnabled(s.length() > 0);
-                _checkBoxCheckPortOnly.setChecked(s.length() > 0);
+                if (s.length() == 0) _checkBoxCheckPortOnly.setChecked(false);
             }
         });
 

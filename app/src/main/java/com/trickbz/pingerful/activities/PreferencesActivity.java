@@ -1,8 +1,11 @@
-package com.trickbz.pingerful;
+package com.trickbz.pingerful.activities;
 
 import android.app.Activity;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+
+import com.trickbz.pingerful.PreferencesFragment;
+import com.trickbz.pingerful.R;
 
 
 public class PreferencesActivity extends Activity
