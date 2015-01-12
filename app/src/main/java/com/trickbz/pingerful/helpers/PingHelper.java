@@ -1,8 +1,10 @@
 package com.trickbz.pingerful.helpers;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.preference.PreferenceManager;
 
 import com.google.common.net.InetAddresses;
 import com.trickbz.pingerful.PingHostModel;
@@ -72,7 +74,7 @@ public final class PingHelper {
         return inetAddress;
     }
 
-    public static boolean PingHost(String ipOrHostName) {
+    public static boolean PingHost(String ipOrHostName, int pingsCount) {
 
         boolean isPingPassed = false;
         InetAddress inetAddress = inetAddressByHostName(ipOrHostName);
@@ -82,8 +84,8 @@ public final class PingHelper {
             Runtime runtime = Runtime.getRuntime();
             try {
                 String ipString = inetAddress.getHostAddress();
-                String prefix = "/system/bin/ping -c 1 ";
-                Process processPing = runtime.exec(prefix + ipString);
+                String commandToExecute = String.format("/system/bin/ping -c %d %s", pingsCount, ipString);
+                Process processPing = runtime.exec(commandToExecute);
                 int pingProcessExitCode = processPing.waitFor();
                 if (pingProcessExitCode == 0)
                     isPingPassed = true;
@@ -101,7 +103,7 @@ public final class PingHelper {
         boolean pingPassed = false;
         String nameOrIp = model.get_nameOrIp();
         String portString = model.get_port();
-        if (!model.is_checkPortOnly()) pingPassed = PingHelper.PingHost(nameOrIp);
+        if (!model.is_checkPortOnly()) pingPassed = PingHelper.PingHost(nameOrIp, model.get_pingTimes());
         if (portString != null && !portString.isEmpty())
         {
             int port = Integer.parseInt(portString);

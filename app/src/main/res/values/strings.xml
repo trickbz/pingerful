@@ -11,7 +11,7 @@
     <string name="pref_use_notification_summary">Show notification in status bar when ping is failed</string>
     <string name="pref_notifications_group_title">Notifications</string>
     <string name="pref_ping_mode_group_title">Ping mode</string>
-    <string name="pref_ping_interval_title">Ping interval (minutes)</string>
+    <string name="pref_ping_interval_title">Ping interval</string>
     <string name="pref_ping_interval">pref_ping_interval</string>
     <string name="preferences_file_key">preferences_file_key</string>
     <string name="pref_ping_automatically">pref_ping_automatically</string>
@@ -37,5 +37,7 @@
     <string name="checkbox_check_port_only_text">Check port only</string>
     <string name="host_title_text_edit_host">Host Title</string>
     <string name="checkbox_show_title_only_add_host_title">Show title only</string>
+    <string name="pref_pings_count">pref_pings_count</string>
+    <string name="pref_pings_count_title">Pings count</string>
 
 </resources>

@@ -70,6 +70,11 @@ public class PreferencesFragment extends PreferenceFragment implements SharedPre
                 String value = sharedPrefs.getString(preferenceKey, "2");
                 preference.setSummary(String.format("Ping each %s minute(s)", value));
             }
+            else if (preferenceKey.equals(getString(R.string.pref_pings_count, "3")))
+            {
+                String value = sharedPrefs.getString(preferenceKey, "3");
+                preference.setSummary(String.format("Ping %s time(s)", value));
+            }
         }
     }
 

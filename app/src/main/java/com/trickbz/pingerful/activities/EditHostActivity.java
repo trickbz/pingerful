@@ -3,7 +3,9 @@ package com.trickbz.pingerful.activities;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v7.app.ActionBarActivity;
 import android.text.Editable;
 import android.text.InputFilter;
@@ -180,6 +182,8 @@ public class EditHostActivity extends ActionBarActivity
                 final String hostNameOrIp = String.valueOf(_editTextHostNameOrIp.getText());
                 final String portNumber = String.valueOf(_editTextPortNumber.getText());
                 final boolean isCheckPortOnly = _checkBoxCheckPortOnly.isChecked();
+                SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(v.getContext());
+                int pingsCount = Integer.parseInt(pref.getString(getString(R.string.pref_pings_count), "3"));
 
                 if (validateAddHostDialog())
                 {
@@ -189,7 +193,7 @@ public class EditHostActivity extends ActionBarActivity
 
                     PingHostTask taskPingHost = new PingHostTask();
                     taskPingHost.setCallback(pingTaskCompletedCallback);
-                    taskPingHost.execute(new PingHostModel(hostNameOrIp, portNumber, isCheckPortOnly));
+                    taskPingHost.execute(new PingHostModel(hostNameOrIp, portNumber, isCheckPortOnly, pingsCount));
 
                     IpAddressByHostNameTask ipByHostNameTask = new IpAddressByHostNameTask();
                     ipByHostNameTask.setCallback(new StringCallback() {

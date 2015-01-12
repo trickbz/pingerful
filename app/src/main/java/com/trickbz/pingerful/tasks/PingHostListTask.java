@@ -32,13 +32,14 @@ public class PingHostListTask extends AsyncTask<Void, Void, Void> {
 
         final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(_context);
         boolean isPingAutomatically = prefs.getBoolean(_context.getString(R.string.pref_ping_automatically), true);
+        int pingsCount = Integer.parseInt(prefs.getString(_context.getString(R.string.pref_pings_count), "3"));
 
         for (Host host : hosts)
         {
             if (host.isActive)
             {
                 boolean isOnlinePrevious = host.isOnline;
-                PingHostModel pingModel = new PingHostModel(host.nameOrIp, host.portNumber, host.checkPortOnly);
+                PingHostModel pingModel = new PingHostModel(host.nameOrIp, host.portNumber, host.checkPortOnly, pingsCount);
                 boolean pingPassed = PingHelper.PingByPingAndPort(pingModel);
                 Date currentDate = new Date();
                 host.isOnline = pingPassed;
